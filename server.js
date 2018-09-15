@@ -47,8 +47,8 @@ app.engine("handlebars", exphbs({
 app.set("view engine", "handlebars");
 
 // Database configuration with mongoose
-mongoose.connect("mongodb://testing1:testing1@ds155292.mlab.com:55292/heroku_npwh9nt8");
-//mongoose.connect("mongodb://heroku_jmv816f9:5j1nd4taq42hi29bfm5hobeujd@ds133192.mlab.com:33192/heroku_jmv816f9");
+//mongoose.connect("mongodb://testing1:testing1@ds155292.mlab.com:55292/heroku_npwh9nt8");
+mongoose.connect("mongodb://heroku_jmv816f9:5j1nd4taq42hi29bfm5hobeujd@ds133192.mlab.com:33192/heroku_jmv816f9");
 //mongoose.connect("mongodb://localhost/mongoscraper");
 mongoose.Promise = Promise;
 var db = mongoose.connection;
@@ -102,6 +102,11 @@ app.get("/scrape", function(req, res) {
       result.title = $(this).children("h2").text();
       result.summary = $(this).children(".summary").text();
       result.link = $(this).children("h2").children("a").attr("href");
+      console.log("result!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+      console.log($(this).toString().substring(
+        $(this).toString().lastIndexOf("<title>") + 7, 
+        $(this).toString().lastIndexOf("</title>")
+    ))
 
       // Using our Article model, create a new entry
       // This effectively passes the result object to the entry (and the title and link)
@@ -111,11 +116,11 @@ app.get("/scrape", function(req, res) {
       entry.save(function(err, doc) {
         // Log any errors
         if (err) {
-          console.log(err);
+          // console.log(err);
         }
         // Or log the doc
         else {
-          console.log(doc);
+          // console.log(doc);
         }
       });
 
@@ -132,7 +137,7 @@ app.get("/articles", function(req, res) {
   Article.find({}, function(error, doc) {
     // Log any errors
     if (error) {
-      console.log(error);
+      // console.log(error);
     }
     // Or send the doc to the browser as a json object
     else {
@@ -151,7 +156,7 @@ app.get("/articles/:id", function(req, res) {
   .exec(function(error, doc) {
     // Log any errors
     if (error) {
-      console.log(error);
+      // console.log(error);
     }
     // Otherwise, send the doc to the browser as a json object
     else {
@@ -169,7 +174,7 @@ app.post("/articles/save/:id", function(req, res) {
       .exec(function(err, doc) {
         // Log any errors
         if (err) {
-          console.log(err);
+          // console.log(err);
         }
         else {
           // Or send the document to the browser
