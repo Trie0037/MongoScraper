@@ -47,8 +47,9 @@ app.engine("handlebars", exphbs({
 app.set("view engine", "handlebars");
 
 // Database configuration with mongoose
+mongoose.connect("mongodb://heroku_npwh9nt8:qbp0qrk22n77gsnkhvgdjt08ng@ds155292.mlab.com:55292/heroku_npwh9nt8");
 //mongoose.connect("mongodb://testing1:testing1@ds155292.mlab.com:55292/heroku_npwh9nt8");
-mongoose.connect("mongodb://heroku_jmv816f9:5j1nd4taq42hi29bfm5hobeujd@ds133192.mlab.com:33192/heroku_jmv816f9");
+//mongoose.connect("mongodb://heroku_jmv816f9:5j1nd4taq42hi29bfm5hobeujd@ds133192.mlab.com:33192/heroku_jmv816f9");
 //mongoose.connect("mongodb://localhost/mongoscraper");
 mongoose.Promise = Promise;
 var db = mongoose.connection;
@@ -102,7 +103,7 @@ app.get("/scrape", function(req, res) {
       result.title = $(this).children("h2").text();
       result.summary = $(this).children(".summary").text();
       result.link = $(this).children("h2").children("a").attr("href");
-      console.log("result!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+      //console.log("result!!!!!!!!!!!!!!!!!!!!!!!!!!!")
       console.log($(this).toString().substring(
         $(this).toString().lastIndexOf("<title>") + 7, 
         $(this).toString().lastIndexOf("</title>")
@@ -151,7 +152,7 @@ app.get("/articles/:id", function(req, res) {
   // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
   Article.findOne({ "_id": req.params.id })
   // ..and populate all of the notes associated with it
-  .populate("note")
+  .populate("notes")
   // now, execute our query
   .exec(function(error, doc) {
     // Log any errors
